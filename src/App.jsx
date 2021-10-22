@@ -1,11 +1,12 @@
 import './App.scss';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function App() {
   const [currentInput, setCurrentInput] = useState(0);
   const [backInput, setBackInput] = useState([]);
   const [history, setHistory] = useState([{}]);
   const [fontEmCount, setFontEmCount] = useState(5);
+  const [superSecret, setSuperSecret] = useState('');
   const isAcceptableValue = (value) => ['+', '-', '%', 'B', 'C', '=', '±', '.', '×', '÷'].includes(value);
   const isSymbol = (value) => ['+', '-', '×', '÷', '%'].includes(value);
   const keyMap = {
@@ -36,6 +37,7 @@ function App() {
   const handleInput = (e) => handleInsert(e.target.value);
   const handleKeyInput = ({ key }) => {
     if (keyMap[key] !== undefined) return handleInsert(keyMap[key]);
+    setSuperSecret(`${superSecret}${key}`);
   };
 
   const handleInsert = (initValue) => {
@@ -130,6 +132,7 @@ function App() {
 
   const displayBox = useRef();
   const fontReference = useRef();
+  const secretBase = useRef();
   const textResize = () => {
     const e = displayBox.current;
     const sizeReference = fontReference.current.offsetWidth;
@@ -148,6 +151,28 @@ function App() {
       document.removeEventListener('keydown', handleKeyInput);
     };
   }, [handleKeyInput]);
+  useEffect(() => {
+    let e = secretBase.current;
+    if (superSecret.slice(superSecret.length - 11, superSecret.length) === 'thekomakoma') {
+      renderSecret('uBMcdIXePE0');
+    }
+    if (superSecret.slice(superSecret.length - 5, superSecret.length) === 'monke') {
+      renderSecret('AGvy8ZR7xPo');
+    }
+    if (superSecret.slice(superSecret.length - 6, superSecret.length) === 'floppa') {
+      renderSecret('zSZ2ay7VxPg');
+    }
+    return () => {
+      e.style.display = 'none';
+      e.children[0].innerHTML = '';
+    };
+  }, [superSecret]);
+  const renderSecret = (url) => {
+    let e = secretBase.current;
+    e.children[0].innerHTML = '<iframe width="100%" height="100%" allow="autoplay" />';
+    e.children[0].children[0].src = `https://www.youtube.com/embed/${url}?autoplay=1`;
+    e.style.display = 'flex';
+  };
 
   return (
     <div className="backdrop">
@@ -247,6 +272,9 @@ function App() {
               );
             })}
         </div>
+      </div>
+      <div className="secret" ref={secretBase}>
+        <div className="secret__box"></div>
       </div>
     </div>
   );
