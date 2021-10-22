@@ -1,0 +1,172 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
+  background: none;
+}
+
+::-webkit-scrollbar {
+  height: 1.5rem;
+  width: .7rem;
+  transition: all .2s linear;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(white, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(white, 0.3);
+}
+
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/pexels-adrien-olichon-2387793.jpg");
+  background-size: cover;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 7vh 83vh;
+  padding: 5vh 25vw;
+  @media screen and (max-width: 1600px) {
+    padding: 5vh 20vw;
+  }
+  @media screen and (max-width: 1400px) {
+    padding: 5vh 10vw;
+  }
+  @media screen and (max-width: 950px) {
+    padding: 0;
+    grid-template-rows: 7vh 93vh;
+  }
+
+}
+
+.title {
+  padding: 2vh 0 0;
+  font-size: 2.5em;
+  letter-spacing: 10px;
+  color: aliceblue;
+  @media screen and (max-width: 950px) {
+    padding: 2vh 2vw 0;
+  }
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-rows: 30% 1fr;
+  grid-template-columns: 65% 1fr;
+  grid-template-areas: "screen history"
+  "keypad history";
+  backdrop-filter: blur(32px);
+  border-radius: 16px;
+  overflow: hidden;
+  @media screen and (max-width: 950px) {
+    border-radius: 0;
+  }
+
+
+  &__screen {
+    grid-area: screen;
+    background-color: rgba(white, 0.02);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+
+    &__referencer {
+      position: absolute;
+      user-select: none;
+      color: transparent;
+      z-index: -1;
+    }
+
+    &__past {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      padding: 0 5%;
+      color: #9f9f9f;
+      font-size: 1.5em;
+      overflow: hidden;
+
+      &__box {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    &__current {
+      padding: 5% 5%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      color: #dddddd;
+      overflow: hidden;
+
+      &__box {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  &__keypad {
+    user-select: none;
+    grid-area: keypad;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+
+    &__key {
+      transition: all .2s linear;
+      font-size: 3em;
+      color: #dddddd;
+
+      &:hover {
+        background-color: rgba(white, 0.2);
+      }
+    }
+  }
+
+  &__history {
+    max-height: 83vh;
+    grid-area: history;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
+    padding: 2vh 1vw;
+    grid-gap: 1vh;
+    overflow-y: scroll;
+    background-color: rgba(black, 0.1);
+
+    &__record {
+      overflow: hidden;
+      text-align: end;
+
+      &__formula {
+        font-size: 1.5em;
+        color: #9f9f9f;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &__result {
+        font-size: 2em;
+        color: #dddddd;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
