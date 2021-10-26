@@ -261,7 +261,7 @@ function App() {
           {Object.keys(history)
             .reverse()
             .map((index) => {
-              if (index === '1') {
+              if (index === (history.length - 1).toString()) {
                 return;
               }
               return (
