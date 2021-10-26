@@ -68,7 +68,7 @@ function App() {
         let localBackInput = backInput;
         let newValue;
         if (!currentInput.length) {
-          localValue = backInput[backInput.length - 2] || ' ';
+          localValue = backInput[backInput.length - 2] || 0;
           localBackInput = [...backInput.slice(0, backInput.length - 2)];
           setBackInput(localBackInput);
           newValue = localValue;
@@ -273,8 +273,8 @@ function App() {
             })}
         </div>
       </div>
-      <div className="secret" ref={secretBase}>
-        <div className="secret__box"></div>
+      <div className="secret" ref={secretBase} onClick={() => setSuperSecret('')}>
+        <div className="secret__box" />
       </div>
     </div>
   );
