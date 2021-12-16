@@ -2,6 +2,12 @@ import './App.scss';
 import { useEffect, useRef, useState } from 'react';
 
 function App() {
+  const displayBox = useRef();
+  const focusTarget = useRef();
+  const fontReference = useRef();
+  const secretBase = useRef();
+  5;
+
   const [currentInput, setCurrentInput] = useState(0);
   const [backInput, setBackInput] = useState([]);
   const [history, setHistory] = useState([{}]);
@@ -32,12 +38,6 @@ function App() {
     '=': '=',
     C: 'C',
     c: 'C',
-  };
-
-  const handleInput = (e) => handleInsert(e.target.value);
-  const handleKeyInput = ({ key }) => {
-    if (keyMap[key] !== undefined) return handleInsert(keyMap[key]);
-    setSuperSecret(`${superSecret}${key}`);
   };
 
   const handleInsert = (initValue) => {
@@ -120,19 +120,28 @@ function App() {
               }
             }
           });
-          let tempHistory = { formula: `${publicFormula.join(' ')} = `, result: `${eval(formula.join(' '))}` };
+          const tempHistory = { formula: `${publicFormula.join(' ')} = `, result: `${eval(formula.join(' '))}` };
           setBackInput([]);
           setCurrentInput(0);
-          setHistory([...history, tempHistory]);
+          if (history[0].formula) {
+            setHistory([...history, tempHistory]);
+          } else {
+            console.log(tempHistory);
+            setHistory([tempHistory]);
+          }
         }
       }
       textResize();
     }
+    setTimeout(() => focusTarget.current.focus(), 10);
   };
 
-  const displayBox = useRef();
-  const fontReference = useRef();
-  const secretBase = useRef();
+  const handleInput = (e) => handleInsert(e.target.value);
+  const handleKeyInput = ({ key }) => {
+    if (keyMap[key] !== undefined) return handleInsert(keyMap[key]);
+    setSuperSecret(`${superSecret}${key}`);
+  };
+
   const textResize = () => {
     const e = displayBox.current;
     const sizeReference = fontReference.current.offsetWidth;
@@ -176,6 +185,7 @@ function App() {
 
   return (
     <div className="backdrop">
+      <button className="focus_target" ref={focusTarget} />
       <div className="title">ULTIMA</div>
       <div className="main">
         <div className="main__screen">
